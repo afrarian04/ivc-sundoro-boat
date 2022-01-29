@@ -67,7 +67,7 @@ namespace ivc_sundoro_boat.Controllers
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<DataCustomer>> GetDataCustomer(Guid id)
+        public async Task<ActionResult<CustomerLoadVM>> GetDataCustomer(Guid id)
         {
             var dataCustomer = await _context.DataCustomers.FindAsync(id);
 
@@ -76,7 +76,21 @@ namespace ivc_sundoro_boat.Controllers
                 return NotFound();
             }
 
-            return dataCustomer;
+            CustomerLoadVM data = new CustomerLoadVM();
+            data.Uuid = dataCustomer.Uuid;
+            data.CreatedAt = dataCustomer.CreatedAt;
+            data.BoatPrice = dataCustomer.BoatPrice;
+            data.CustName = dataCustomer.CustName;
+            data.DateIvc = dataCustomer.DateIvc.ToString();
+            data.RentDate = dataCustomer.RentDate.ToString();
+            data.IsPph = dataCustomer.IsPph;
+            data.Note = dataCustomer.Note;
+            data.Necessity = dataCustomer.Necessity;
+            data.NumberIvc = dataCustomer.NumberIvc;
+            data.PphValue = dataCustomer.PphValue;
+            data.RentTime = dataCustomer.RentTime;
+
+            return data;
         }
 
         // PUT: api/Customers/5
